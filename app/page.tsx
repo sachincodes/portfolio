@@ -54,9 +54,21 @@ export default function Home() {
 
           <a
             href="mailto:www.sachinj@gmail.com"
-            className="inline-block border border-gray-600 px-6 py-3 rounded-2xl hover:bg-white hover:text-black transition"
+            className="inline-flex items-center gap-2 border border-gray-600 px-6 py-3 rounded-2xl hover:bg-white hover:text-black transition"
           >
-            sachinj@gmail.com
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              className="w-5 h-5"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1-.75-.75v-9a.75.75 0 0 1 .75-.75Z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="m3.5 7 8.1 6.25a.75.75 0 0 0 .9 0L20.5 7" />
+            </svg>
+            www.sachinj@gmail.com
           </a>
 
           <p className="text-gray-600 text-sm mt-8">© {new Date().getFullYear()} Sachin Joshi</p>

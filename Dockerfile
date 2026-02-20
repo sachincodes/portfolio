@@ -1,27 +1,14 @@
-FROM node:22-alpine AS deps
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN npm run build
-
-FROM node:22-alpine AS runner
+FROM node:22-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
-
-RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY package*.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci
 
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
+COPY . .
+RUN npm run build && npm prune --omit=dev && npm cache clean --force
 
 EXPOSE 3000
-USER nextjs
 CMD ["npm", "run", "start"]

@@ -132,3 +132,23 @@ body {
   border: 1px solid rgba(16, 32, 48, 0.08);
   box-shadow: 0 1px 2px rgba(16, 32, 48, 0.04);
 }
+
+/* Theme-toggle icon visibility
+   - Default: treat missing `data-theme` as light mode -> show sun, hide moon
+   - When `data-theme="dark"`: hide sun, show moon
+ */
+.icon-sun {
+  display: inline-block;
+}
+
+.icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+  display: inline-block;
+}

@@ -3,44 +3,71 @@
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [theme, setTheme] = useState<"dark" | "light">("light");
-  const [hasSavedTheme, setHasSavedTheme] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  // Initialize theme: prefer server-rendered `data-theme`, then cookie, then OS preference
+  const { initialTheme, initialHasSaved, initialIsInitialized } = ((): { initialTheme: "dark" | "light"; initialHasSaved: boolean; initialIsInitialized: boolean } => {
+    try {
+      const docTheme = typeof document !== "undefined" ? document.documentElement.getAttribute("data-theme") : undefined;
+      if (docTheme === "dark" || docTheme === "light") {
+        return { initialTheme: docTheme as "dark" | "light", initialHasSaved: true, initialIsInitialized: true };
+      }
+
+      const cookieTheme = document.cookie
+        .split("; ")
+        .find((item) => item.startsWith("theme="))
+        ?.split("=")[1];
+
+      if (cookieTheme === "dark" || cookieTheme === "light") {
+        return { initialTheme: cookieTheme as "dark" | "light", initialHasSaved: true, initialIsInitialized: true };
+      }
+
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      return { initialTheme: prefersDark ? "dark" : "light", initialHasSaved: false, initialIsInitialized: true };
+    } catch (e) {
+      return { initialTheme: "light" as "dark" | "light", initialHasSaved: false, initialIsInitialized: false };
+    }
+  })();
+
+  const [theme, setTheme] = useState<"dark" | "light">(initialTheme);
+  const [hasSavedTheme, setHasSavedTheme] = useState(initialHasSaved);
+  const [isInitialized, setIsInitialized] = useState(initialIsInitialized);
 
   const techStack = [
     "Coding",
     "Cloud",
-    "AI & ML",
-    "Photography",
-    "Writing",
+    "AI",
+    "ML",
+    "DevOps",
     "Building",
+    "Learning",
   ];
 
   const nowItems = [
-    "Building: ShareInRoom",
-    "Sharing: Things I make",
+    "Building",
+    "Sharing",
     "Open to collabs",
   ];
 
-  useEffect(() => {
-    const cookieTheme = document.cookie
-      .split("; ")
-      .find((item) => item.startsWith("theme="))
-      ?.split("=")[1];
-
-    if (cookieTheme === "dark" || cookieTheme === "light") {
-      setTheme(cookieTheme);
-      setHasSavedTheme(true);
-      setIsInitialized(true);
-      return;
+  const projects = [
+    {
+      title: "Share in Room",
+      description:
+        "Quick file sharing: create a room, drop files, and share backend uses Node with Socket.IO for signaling. Rooms auto-clean after use.",
+      url: "https://shareinroom.cloud",
+      tags: ["Node", "Socket.IO"],
+      status: "Live",
+    },
+    // Coming soon / skeleton card
+    {
+      title: "####",
+      description: "Small experiments and tools planning the first release. Details coming soon.",
+      url: "#",
+      tags: ["Planning"],
+      status: "Coming Soon",
     }
+    // Add more projects here later
+  ];
 
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(prefersDark ? "dark" : "light");
-    setHasSavedTheme(false);
-    setIsInitialized(true);
-  }, []);
-
+  // Using a CSS-only approach for consistent card body height (min-height).
   useEffect(() => {
     if (!isInitialized) {
       return;
@@ -73,43 +100,42 @@ export default function Home() {
       <button
         type="button"
         onClick={toggleTheme}
-        aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-        title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        aria-label="Toggle color theme"
+        title="Toggle color theme"
         className="fixed top-5 right-5 z-50 h-10 w-10 rounded-full border border-[var(--button-border)] bg-[var(--toggle-bg)] text-[var(--toggle-text)] flex items-center justify-center hover:opacity-90 hover:border-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 transition"
       >
-        {theme === "dark" ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            className="w-5 h-5"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2" />
-            <path d="M12 20v2" />
-            <path d="m4.93 4.93 1.41 1.41" />
-            <path d="m17.66 17.66 1.41 1.41" />
-            <path d="M2 12h2" />
-            <path d="M20 12h2" />
-            <path d="m6.34 17.66-1.41 1.41" />
-            <path d="m19.07 4.93-1.41 1.41" />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            className="w-5 h-5"
-            aria-hidden="true"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3c0 0-1.13 3.94.8 5.87S18 9.79 21 12.79Z" />
-          </svg>
-        )}
+        {/* Render both icons; CSS will show/hide based on [data-theme] to avoid SSR/CSR mismatch */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          className="w-5 h-5 icon-sun"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41 1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          className="w-5 h-5 icon-moon"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3c0 0-1.13 3.94.8 5.87S18 9.79 21 12.79Z" />
+        </svg>
       </button>
 
       <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-gradient-to-br from-[var(--hero-from)] via-[var(--hero-via)] to-[var(--hero-to)] transition-colors duration-200">
@@ -131,7 +157,7 @@ export default function Home() {
             Tinkering with ideas, code, and photos.
           </p>
 
-          <p className="text-[var(--soft-text)]">A small space for the things I build and share — projects, pictures, notes.</p>
+          <p className="text-[var(--soft-text)]">A small space for the projects, photos, and notes I share.</p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-2">
             {nowItems.map((item) => (
@@ -193,17 +219,69 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl font-bold mb-10 text-center">Projects</h2>
 
-          <div className="max-w-2xl mx-auto w-full border border-[var(--panel-border)] p-10 rounded-3xl hover:scale-[1.01] hover:border-[var(--accent)]/50 transition text-center">
-            <h3 className="text-2xl font-semibold mb-3">ShareInRoom</h3>
-            <p className="text-[var(--muted-text)] mb-5">
-              Made this to make quick file sharing easy. Create a room, drop files, share, and it auto-cleans after.
-            </p>
-            <a href="https://shareinroom.cloud" target="_blank" rel="noopener noreferrer" className="underline text-lg text-[var(--accent)]">
-              Check it out →
-            </a>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+            {projects.map((p) => (
+              <article
+                key={p.title}
+                className="group relative overflow-hidden transform-gpu border border-[var(--panel-border)] p-6 rounded-3xl hover:scale-[1.01] hover:border-[var(--accent)]/50 transition flex flex-col h-full"
+              >
+                {/* subtle hover overlay */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent to-[var(--accent)] opacity-0 group-hover:opacity-[0.04] transition-opacity" />
+
+                {/* emoji badge removed from overlay; will render inline with status to avoid duplication */}
+
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-lg font-semibold">{p.title}</h3>
+                    <div className="flex items-center gap-2">
+                      {p.status === 'Coming Soon' && (
+                        <span className="text-yellow-400 text-sm" aria-hidden>
+                          🚧
+                        </span>
+                      )}
+                      <span
+                        className={
+                          p.status === 'Live'
+                            ? 'text-green-400 text-sm font-semibold'
+                            : p.status === 'Coming Soon'
+                            ? 'text-yellow-500 text-sm font-semibold'
+                            : 'text-xs text-[var(--muted-text)]'
+                        }
+                      >
+                        {p.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-4 min-h-[140px] flex flex-col justify-between">
+                    <p className="text-[var(--muted-text)] text-sm mb-4">{p.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {p.tags.map((t) => (
+                        <span
+                          key={t}
+                          className='px-3 py-1 rounded-full text-xs border border-[var(--panel-border)] text-[var(--muted-text)]'
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-auto">
+                    {p.status !== 'Coming Soon' ? (
+                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] underline">
+                        Live →
+                      </a>
+                    ) : (
+                      <span className="text-[var(--subtle-text)] italic" aria-disabled="true">Details coming soon</span>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
 
-          <p className="text-center text-[var(--subtle-text)] mt-8">More stuff coming: photos, essays, and random builds.</p>
+          <p className="text-center text-[var(--subtle-text)] mt-8">More stuff coming soon maybe random builds idk.</p>
         </div>
       </section>
 

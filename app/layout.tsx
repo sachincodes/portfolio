@@ -25,7 +25,10 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const savedTheme = cookieStore.get("theme")?.value;
-  const theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : undefined;
+  // Default to light on the server when no saved theme exists to avoid
+  // relying on the client's `prefers-color-scheme` which can cause
+  // SSR/CSR mismatches and unintentional dark mode.
+  const theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : "light";
 
   return (
     <html lang="en" data-theme={theme}>

@@ -15,8 +15,32 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Sachin Joshi",
-  description: "Learning and building simple cool things.",
+  description:
+    "Personal portfolio of Sachin Joshi — small software experiments, projects, and notes about cloud, AI, and DevOps.",
+  openGraph: {
+    title: "Sachin Joshi",
+    description:
+      "Small projects, cloud demos, and experiments by Sachin Joshi.",
+    url: "https://sachinjoshi.com",
+    siteName: "Sachin Joshi",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Sachin Joshi",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
+
+// Base URL used to resolve Open Graph / Twitter images when generating metadata.
+// Set NEXT_PUBLIC_SITE_URL in your environment (e.g. https://example.com) for production.
+export const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://sachinjoshi.com");
 
 export default async function RootLayout({
   children,

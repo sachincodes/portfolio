@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   // Initialize theme: prefer server-rendered `data-theme`, then cookie, then OS preference
@@ -144,20 +145,25 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <img
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <Image
               src="/sachin.jpg"
               alt="Sachin Joshi"
-              className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border border-[var(--avatar-border)]"
+              width={96}
+              height={96}
+              priority
+              className="-mt-6 sm:mt-0 w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border border-[var(--avatar-border)]"
             />
-            <h1 className="text-5xl md:text-7xl font-bold text-[var(--heading-text)]">Sachin Joshi</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--heading-text)] whitespace-nowrap">
+              Sachin Joshi
+            </h1>
           </div>
 
           <p className="text-2xl text-[var(--muted-text)] mb-8">
-            Tinkering with ideas, code, and photos.
+            Playing around with ideas and code.
           </p>
 
-          <p className="text-[var(--soft-text)]">A small space for the projects, photos, and notes I share.</p>
+          <p className="text-[var(--soft-text)]">A small hub for the stuff I’m working on.</p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-2">
             {nowItems.map((item) => (

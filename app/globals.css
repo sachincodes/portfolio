@@ -1,25 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --page-bg: #f8fafc;
-  --page-text: #0f172a;
-  --hero-from: #e2e8f0;
-  --hero-via: #f1f5f9;
-  --hero-to: #e2e8f0;
-  --panel-border: #cbd5e1;
-  --section-border: #e2e8f0;
-  --muted-text: #334155;
-  --soft-text: #475569;
-  --subtle-text: #64748b;
-  --button-border: #94a3b8;
-  --avatar-border: #94a3b8;
-  --blob-purple: rgba(168, 85, 247, 0.18);
-  --blob-blue: rgba(59, 130, 246, 0.18);
-  --scroll-shadow: rgba(59, 130, 246, 0.25);
+  /* Slightly warmer, higher contrast defaults for light mode */
+  --background: #f5f8fb;
+  --foreground: #071028;
+  --page-bg: #f5f8fb;
+  --page-text: #071028;
+  --hero-from: #cfe6fb;
+  --hero-via: #eaf7ff;
+  --hero-to: #cfe6fb;
+  --panel-border: #9fb3c5;
+  --section-border: #c9d7e6;
+  --muted-text: #0f2a3a;
+  --soft-text: #2c4660;
+  --subtle-text: #486276;
+  --button-border: #6f8aa3;
+  --avatar-border: #7f91ab;
+  --blob-purple: rgba(168, 85, 247, 0.08);
+  --blob-blue: rgba(59, 130, 246, 0.08);
+  --scroll-shadow: rgba(30, 64, 175, 0.16);
   --toggle-bg: #ffffff;
-  --toggle-text: #0f172a;
+  --toggle-text: #071028;
+  --accent: #3f3bd6;
+  --heading-text: #071028;
+    /* subtle dot-grid in light mode for texture (soft, low opacity) */
+    --hero-grid-opacity: 0.14;
+  --chip-bg: #ffffff;
+  --chip-text: #092033;
+  --quick-link-text: #27455d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,21 +36,28 @@
     --foreground: #ededed;
     --page-bg: #0a0a0a;
     --page-text: #ededed;
-    --hero-from: #000000;
-    --hero-via: #111827;
-    --hero-to: #000000;
+    /* use a single solid color for the hero in dark mode (no gradient) */
+    --hero-from: #0a0a0a;
+    --hero-via: #0a0a0a;
+    --hero-to: #0a0a0a;
     --panel-border: #374151;
-    --section-border: #111827;
-    --muted-text: #d1d5db;
+    --section-border: #1f2937;
+    --muted-text: #e2e8f0;
     --soft-text: #9ca3af;
     --subtle-text: #6b7280;
     --button-border: #4b5563;
     --avatar-border: #4b5563;
-    --blob-purple: rgba(168, 85, 247, 0.12);
-    --blob-blue: rgba(59, 130, 246, 0.12);
+    --blob-purple: rgba(168, 85, 247, 0.16);
+    --blob-blue: rgba(59, 130, 246, 0.16);
     --scroll-shadow: rgba(168, 85, 247, 0.3);
     --toggle-bg: #111827;
     --toggle-text: #e5e7eb;
+    --accent: #6366f1;
+    --heading-text: #f1f5f9;
+    --hero-grid-opacity: 0.3;
+    --chip-bg: rgba(17, 24, 39, 0.35);
+    --chip-text: #9ca3af;
+    --quick-link-text: #9ca3af;
   }
 }
 
@@ -51,43 +66,56 @@
   --foreground: #ededed;
   --page-bg: #0a0a0a;
   --page-text: #ededed;
-  --hero-from: #000000;
-  --hero-via: #111827;
-  --hero-to: #000000;
+  /* solid hero color for dark mode */
+  --hero-from: #0a0a0a;
+  --hero-via: #0a0a0a;
+  --hero-to: #0a0a0a;
   --panel-border: #374151;
-  --section-border: #111827;
-  --muted-text: #d1d5db;
+  --section-border: #1f2937;
+  --muted-text: #e2e8f0;
   --soft-text: #9ca3af;
   --subtle-text: #6b7280;
   --button-border: #4b5563;
   --avatar-border: #4b5563;
-  --blob-purple: rgba(168, 85, 247, 0.12);
-  --blob-blue: rgba(59, 130, 246, 0.12);
+  --blob-purple: rgba(168, 85, 247, 0.16);
+  --blob-blue: rgba(59, 130, 246, 0.16);
   --scroll-shadow: rgba(168, 85, 247, 0.3);
   --toggle-bg: #111827;
   --toggle-text: #e5e7eb;
+  --accent: #6366f1;
+  --heading-text: #f1f5f9;
+  --hero-grid-opacity: 0.3;
+  --chip-bg: rgba(17, 24, 39, 0.35);
+  --chip-text: #9ca3af;
+  --quick-link-text: #9ca3af;
 }
 
 [data-theme="light"] {
-  --background: #f8fafc;
+  --background: #eef3f8;
   --foreground: #0f172a;
-  --page-bg: #f8fafc;
+  --page-bg: #eef3f8;
   --page-text: #0f172a;
-  --hero-from: #e2e8f0;
-  --hero-via: #f1f5f9;
-  --hero-to: #e2e8f0;
-  --panel-border: #cbd5e1;
-  --section-border: #e2e8f0;
-  --muted-text: #334155;
-  --soft-text: #475569;
-  --subtle-text: #64748b;
-  --button-border: #94a3b8;
-  --avatar-border: #94a3b8;
-  --blob-purple: rgba(168, 85, 247, 0.18);
-  --blob-blue: rgba(59, 130, 246, 0.18);
-  --scroll-shadow: rgba(59, 130, 246, 0.25);
+  --hero-from: #dbe5f2;
+  --hero-via: #edf2f9;
+  --hero-to: #dbe5f2;
+  --panel-border: #b5c3d7;
+  --section-border: #ced9e8;
+  --muted-text: #1b2a3f;
+  --soft-text: #334a62;
+  --subtle-text: #4f647b;
+  --button-border: #7f91ab;
+  --avatar-border: #7f91ab;
+  --blob-purple: rgba(168, 85, 247, 0.12);
+  --blob-blue: rgba(59, 130, 246, 0.12);
+  --scroll-shadow: rgba(30, 64, 175, 0.18);
   --toggle-bg: #ffffff;
   --toggle-text: #0f172a;
+  --accent: #4338ca;
+  --heading-text: #0f172a;
+  --hero-grid-opacity: .8;
+  --chip-bg: rgb(0, 0, 0);
+  --chip-text: #0a0a0a;
+  --quick-link-text: #324861;
 }
 
 body {
@@ -95,4 +123,12 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   transition: background-color 220ms ease, color 220ms ease;
+}
+
+/* Fixed chip style that does not change with theme */
+.chip-fixed {
+  background: #ffffff;
+  color: #092033;
+  border: 1px solid rgba(16, 32, 48, 0.08);
+  box-shadow: 0 1px 2px rgba(16, 32, 48, 0.04);
 }

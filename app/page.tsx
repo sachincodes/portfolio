@@ -297,7 +297,7 @@ export default function Home() {
           <p className="text-[var(--soft-text)] mb-6">sachinj@gmail.com</p>
 
           <a
-            href="mailto:sachinj@gmail.com"
+            href="mailto:www.sachinj@gmail.com"
             className="inline-flex items-center gap-2 border border-[var(--button-border)] px-6 py-3 rounded-2xl hover:bg-[var(--page-text)] hover:text-[var(--page-bg)] transition"
           >
             <svg

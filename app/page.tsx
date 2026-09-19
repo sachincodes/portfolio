@@ -23,14 +23,14 @@ export default function Home() {
 
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       return { initialTheme: prefersDark ? "dark" : "light", initialHasSaved: false, initialIsInitialized: true };
-    } catch (e) {
+    } catch {
       return { initialTheme: "light" as "dark" | "light", initialHasSaved: false, initialIsInitialized: false };
     }
   })();
 
   const [theme, setTheme] = useState<"dark" | "light">(initialTheme);
   const [hasSavedTheme, setHasSavedTheme] = useState(initialHasSaved);
-  const [isInitialized, setIsInitialized] = useState(initialIsInitialized);
+  const [isInitialized] = useState(initialIsInitialized);
 
   const techStack = [
     "Coding",
@@ -57,6 +57,22 @@ export default function Home() {
       tags: ["Node", "Socket.IO"],
       status: "Live",
     },
+    {
+      title: "Watch Party",
+      description:
+        "Real-time YouTube watch parties. Create a room, queue videos, and watch together in sync from the same room.",
+      url: "https://party.shareinroom.cloud",
+      tags: ["Node", "Socket.IO"],
+      status: "Live",
+    },
+    {
+      title: "Wardrobe Match",
+      description:
+        "A tiny tool that answers “what goes with this?” — check outfits and combinations before you even open the closet.",
+      url: "https://wardrobe.shareinroom.cloud",
+      tags: ["Experiment"],
+      status: "Live",
+    },
     // Coming soon / skeleton card
     {
       title: "####",
@@ -64,7 +80,7 @@ export default function Home() {
       url: "#",
       tags: ["Planning"],
       status: "Coming Soon",
-    }
+    },
     // Add more projects here later
   ];
 

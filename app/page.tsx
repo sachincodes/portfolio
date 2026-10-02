@@ -73,6 +73,14 @@ export default function Home() {
       tags: ["Experiment"],
       status: "Live",
     },
+    {
+      title: "Recipe Roulette",
+      description:
+        "Upload a photo of your fridge or ingredients to get 3 recipe ideas and vote on the best. Or scan food items to get detailed nutrition info including calories, macros, and other values.",
+      url: "https://food.shareinroom.cloud",
+      tags: ["AI"],
+      status: "Live",
+    },
     // Coming soon / skeleton card
     {
       title: "####",
